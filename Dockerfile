@@ -1,25 +1,13 @@
-FROM node:lts-alpine
-
-LABEL maintainer="TitaniumNetwork Ultraviolet Team"
-LABEL summary="Ultraviolet Proxy Image"
-LABEL description="Example application of Ultraviolet which can be deployed in production."
+FROM node:24-alpine
 
 ENV NODE_ENV=production
+ENV PORT=8080
 WORKDIR /app
 
-RUN apk add --upgrade --no-cache python3 make g++
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-RUN npm install --global corepack@latest
-
-COPY package.json /app/package.json
-COPY pnpm-lock.yaml /app/pnpm-lock.yaml
-
-RUN corepack install
-RUN pnpm install
-
-COPY . /app
+COPY . .
 
 EXPOSE 8080
-
-ENTRYPOINT [ "node" ]
-CMD ["src/index.js"]
+CMD ["node", "src/index.js"]

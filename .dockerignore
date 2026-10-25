@@ -1,5 +1,4 @@
 .dockerignore
-Dockerfile
 .eslintignore
 .eslintrc.json
 .gitignore
@@ -10,3 +9,5 @@ LICENSE
 README.md
 replit.nix
 .github/
+node_modules/
+.git/
